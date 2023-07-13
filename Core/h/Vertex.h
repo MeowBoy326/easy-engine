@@ -2,8 +2,6 @@
 
 #include <Core_api.h>
 
-#include <GLFW/glfw3.h>
-
 namespace easy::graphics::core {
     typedef float VertexUnitType ;
 
@@ -12,7 +10,7 @@ namespace easy::graphics::core {
         Vertex() = default;
         Vertex(const Vertex &) = default;
         Vertex(Vertex&&) = default;
-        Vertex(float x, float y, float z);
+        Vertex(float x, float y, float z = 0);
 
         VertexUnitType* GetRaw();
         float& GetX();

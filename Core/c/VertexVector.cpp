@@ -21,6 +21,11 @@ namespace easy::graphics::core {
         data_.clear();
     }
 
+    size_t VertexVector::SizeOf() const
+    {
+        return data_.size() * sizeof(Vertex);
+    }
+
     size_t VertexVector::Size() const
     {
         return data_.size();

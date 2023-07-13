@@ -4,9 +4,6 @@
 #include <initializer_list>
 
 #include <Core_api.h>
-
-#include <GLFW/glfw3.h>
-
 #include <Core/h/Vertex.h>
 
 namespace easy::graphics::core {
@@ -20,6 +17,7 @@ namespace easy::graphics::core {
         void Push(const Vertex& vertex);
         void Clear();
 
+        size_t SizeOf() const;
         size_t Size() const;
         Vertex* GetRaw();
 

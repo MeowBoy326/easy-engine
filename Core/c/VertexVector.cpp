@@ -10,6 +10,10 @@ namespace easy::graphics::core {
         }
     }
 
+    Vertex& VertexVector::At(size_t index)
+    {
+        return data_[index];
+    }
 
     void VertexVector::Push(const Vertex& vertex)
     {

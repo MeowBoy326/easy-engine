@@ -14,6 +14,8 @@ namespace easy::graphics::core {
         VertexVector(VertexVector&&) = default;
         VertexVector(std::initializer_list<Vertex>&& vertices);
 
+
+        Vertex& At(size_t index);
         void Push(const Vertex& vertex);
         void Clear();
 

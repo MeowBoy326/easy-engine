@@ -52,7 +52,11 @@ const char* fragmentShaderSource = "#version 460 core\n"
 "   FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f);\n"
 "}\n\0";
 
-
+float Normalice(float max, float current)
+{
+	float relative = (2 * current) / max;
+	return -1.f + relative;
+}
 
 int main()
 {
@@ -123,7 +127,7 @@ int main()
 	// Bind the VBO specifying it's a GL_ARRAY_BUFFER
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	// Introduce the vertices into the VBO
-	glBufferData(GL_ARRAY_BUFFER, vertices.SizeOf(), vertices.GetRaw(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices.SizeOf(), vertices.GetRaw(), GL_DYNAMIC_DRAW);
 
 	// Configure the Vertex Attribute so that OpenGL knows how to read the VBO
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
@@ -131,18 +135,36 @@ int main()
 	glEnableVertexAttribArray(0);
 
 	// Bind both the VBO and VAO to 0 so that we don't accidentally modify the VAO and VBO we created
-	//	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//	glBindVertexArray(0);
+	// glBindBuffer(GL_ARRAY_BUFFER, 0);
+	// glBindVertexArray(0);
+
+	int w, h;
+	glfwGetWindowSize(window, &w, &h);
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
+
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+		xpos = Normalice(w, xpos);
+		ypos = -1 *  Normalice(h, ypos);
+
+		vertices.At(2).GetX() = xpos;
+		vertices.At(2).GetY() = ypos;
+
+		std::cout << xpos << "|" << ypos << std::endl;
+
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		// Update the vertices into GPU
+		glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.SizeOf(), vertices.GetRaw());
 		// Tell OpenGL which Shader Program we want to use
 		shader_program.Run();
+
 		// Bind the VAO so OpenGL knows to use it
 		glBindVertexArray(VAO);
 		// Draw the triangle using the GL_TRIANGLES primitive

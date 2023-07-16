@@ -4,6 +4,7 @@
 #include <Core/h/Vertex.h>
 #include <Core/h/VertexVector.h>
 #include <Core/h/Shader.h>
+#include <Core/h/ShaderProgram.h>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -90,14 +91,11 @@ int main()
 	// Create Fragment Shader Object and get its reference
 	easy::graphics::core::Shader fragment_shader(GL_FRAGMENT_SHADER, fragmentShaderSource);
 
-	// Create Shader Program Object and get its reference
-	GLuint shaderProgram = glCreateProgram();
-	// Attach the Vertex and Fragment Shaders to the Shader Program
-	glAttachShader(shaderProgram, vertex_shader.GetId());
-	glAttachShader(shaderProgram, fragment_shader.GetId());
+	std::vector<easy::graphics::core::Shader> shaders;
+	shaders.push_back(std::move(vertex_shader));
+	shaders.push_back(std::move(fragment_shader));
 
-	// Wrap-up/Link all the shaders together into the Shader Program
-	glLinkProgram(shaderProgram);
+	easy::graphics::core::ShaderProgram shader_program(shaders);
 
 	// Delete the now useless Vertex and Fragment Shader objects
 	vertex_shader.Clean();
@@ -144,7 +142,7 @@ int main()
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
 		// Tell OpenGL which Shader Program we want to use
-		glUseProgram(shaderProgram);
+		shader_program.Run();
 		// Bind the VAO so OpenGL knows to use it
 		glBindVertexArray(VAO);
 		// Draw the triangle using the GL_TRIANGLES primitive
@@ -160,7 +158,6 @@ int main()
 	// Delete all the objects we've created
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
-	glDeleteProgram(shaderProgram);
 	// Delete window before ending the program
 	glfwDestroyWindow(window);
 	// Terminate GLFW before ending the program

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>
-#include <functional>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -9,12 +8,11 @@
 
 #include <Core_api.h>
 
-
 namespace easy::graphics::core {
     class CORE_EXPORT Shader {
     public:
         Shader() = default;
-        Shader(Shader&&) = default;
+        Shader(Shader&& shader);
 
         explicit Shader(GLuint type, const std::filesystem::path& path);
         explicit Shader(GLuint type, const char*& data);
@@ -32,8 +30,8 @@ namespace easy::graphics::core {
         void Clean();
 
     private:
-        GLuint id_ = -1;
-        GLuint type_ = -1;
+        GLuint id_ = 0;
+        GLuint type_ = 0;
         char* data_ = nullptr;
         bool was_allocated_ = false;
 

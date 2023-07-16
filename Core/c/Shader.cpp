@@ -22,6 +22,18 @@ namespace easy::graphics::core {
         Load(type, data);
     }
 
+    Shader::Shader(Shader&& other)
+    {
+        id_ = other.id_;
+        other.id_ = 0;
+        type_ = other.type_;
+        other.type_ = 0;
+        was_allocated_ = other.was_allocated_;
+        was_allocated_ = false;
+        data_ = other.data_;
+        other.data_ = nullptr;
+    }
+
     Shader::~Shader()
     {
         Clean();
@@ -29,7 +41,7 @@ namespace easy::graphics::core {
 
     void Shader::Clean()
     {
-        if (type_ != -1)
+        if (type_ != 0)
             glDeleteShader(id_);
 
         if (was_allocated_ && data_ != nullptr)
@@ -37,7 +49,7 @@ namespace easy::graphics::core {
 
         was_allocated_ = false;
         data_ = nullptr;
-        type_ = -1;
+        type_ = 0;
     }
 
 

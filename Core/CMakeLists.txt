@@ -4,7 +4,7 @@ include_directories(..)
 set(LIB_NAME "Core")
 
 # Per example: LIBS_DEPENDENCIES OpenSSL::SSL OpenSSL::Crypto
-set(LIBS_DEPENDENCIES glfw)
+set(LIBS_DEPENDENCIES boost::boost glfw OpenGL::GL glad)
 
 #define lib sources
 file(GLOB CPP_SOURCES  "c/*.cpp" "c/*.cc")
@@ -29,6 +29,6 @@ target_include_directories(${LIB_NAME}
 	..
 )
 
-if(NOT ${LIBS_DEPENDENCIES} STREQUAL "")
+if(LIBS_DEPENDENCIES)
 	target_link_libraries(${LIB_NAME} PUBLIC ${LIBS_DEPENDENCIES})
 endif()

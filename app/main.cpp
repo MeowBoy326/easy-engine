@@ -10,8 +10,6 @@
 #include <Core/h/RenderTarget.h>
 
 
-
-
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
@@ -41,26 +39,6 @@ GLuint CreateShader(GLuint type, const char*& src)
 
    return shader;
 }
-
-// Vertex Shader source code
-const char* vertexShaderSource = R"(#version 460 core
-        layout (location = 0) in vec3 aPos;
-        void main()
-        {
-           gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
-        }
-    )";
-
-//Fragment Shader source code
-const char* fragmentShaderSource = R"(
-        #version 460 core
-        out vec4 FragColor;
-        in vec4 outColor;
-        void main()
-        {
-           FragColor = outColor;
-        }
-    )";
 
 float Normalice(float max, float current)
 {
@@ -98,22 +76,11 @@ int main()
 
 	glViewport(0, 0, 800, 800);
 
-	// Create Vertex Shader Object and get its reference
-	easy::graphics::core::Shader vertex_shader(GL_VERTEX_SHADER, vertexShaderSource);
-
-	// Create Fragment Shader Object and get its reference
-	easy::graphics::core::Shader fragment_shader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-
 	std::vector<easy::graphics::core::Shader> shaders;
-	shaders.push_back(std::move(vertex_shader));
-	shaders.push_back(std::move(fragment_shader));
+	shaders.push_back(std::move(easy::graphics::core::DefaultShaders::Vertex()));
+	shaders.push_back(std::move(easy::graphics::core::DefaultShaders::Fragment()));
 
 	easy::graphics::core::ShaderProgram shader_program(shaders);
-
-	// Delete the now useless Vertex and Fragment Shader objects
-	vertex_shader.Clean();
-	fragment_shader.Clean();
-
 
 	// Vertices coordinates
 	easy::graphics::core::VertexVector vertices =
@@ -127,7 +94,7 @@ int main()
 	{
 		{-1, -1, 0},
 		{1, -1, 0},
-		{0, 1, 0}
+		{0, 1,  0}
 	};
 
 	easy::graphics::core::RenderTarget render1(GL_ARRAY_BUFFER, shader_program);

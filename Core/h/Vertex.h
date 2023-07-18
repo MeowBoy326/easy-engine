@@ -24,9 +24,9 @@ namespace easy::graphics::core {
         float y_ = 0;
         float z_ = 0;
 
-        float r_ = 0;
-        float g_ = 0;
-        float b_ = 0;
+        float r_ = 1;
+        float g_ = 1;
+        float b_ = 1;
         float a_ = 1;
     };
 }

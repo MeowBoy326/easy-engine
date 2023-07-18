@@ -15,7 +15,6 @@ namespace easy::graphics::core {
     void VertexArray::AddBuffer(const BufferData& vb)
     {
         vb.Bind();
-        auto data = vb.GetData();
         int elements = sizeof(Vertex) / sizeof(float);
         glVertexAttribPointer(0, elements, GL_FLOAT, GL_FALSE, elements * sizeof(float), NULL);
         glEnableVertexAttribArray(0);

@@ -2,12 +2,10 @@
 
 namespace easy::graphics::core {
 
-    BufferData::BufferData(VertexVector& data, GLuint type) : data_(data), type_(type)
+    BufferData::BufferData(GLuint type) : type_(type)
     {
-        cache_data_size_ = data_.Size();
 		glGenBuffers(1, &id_);
 		glBindBuffer(type, id_);
-		glBufferData(type, data_.SizeOf(), data_.GetRaw(), GL_DYNAMIC_DRAW);
     }
 
     BufferData::~BufferData()
@@ -25,26 +23,16 @@ namespace easy::graphics::core {
         glBindBuffer(type_, 0);
     }
 
-    const VertexVector& BufferData::GetData() const
-    {
-        return data_;
-    }
-
-    VertexVector& BufferData::GetData()
-    {
-        return data_;
-    }
-
-    void BufferData::Update()
+    void BufferData::Update(const VertexVector& data)
     {
         Bind();
         
-        if (data_.Size() > cache_data_size_) {
-            glBufferData(type_, data_.SizeOf(), data_.GetRaw(), GL_DYNAMIC_DRAW);
-            cache_data_size_ = data_.Size();
+        if (data.Size() > cache_data_size_) {
+            glBufferData(type_, data.SizeOf(), data.GetRaw(), GL_DYNAMIC_DRAW);
+            cache_data_size_ = data.Size();
         }
         else {
-            glBufferSubData(type_, 0, data_.SizeOf(), data_.GetRaw());
+            glBufferSubData(type_, 0, data.SizeOf(), data.GetRaw());
         }
     }
 }

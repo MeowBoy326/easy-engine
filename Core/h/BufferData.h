@@ -10,7 +10,7 @@
 namespace easy::graphics::core {
     class CORE_EXPORT BufferData {
     public:
-        BufferData(VertexVector& data, GLuint type);
+        BufferData(GLuint type);
         BufferData(const BufferData&) = default;
         BufferData(BufferData&&) = default;
         ~BufferData();
@@ -21,12 +21,11 @@ namespace easy::graphics::core {
         const VertexVector& GetData() const;
         VertexVector& GetData();
 
-        void Update();
+        void Update(const VertexVector& data);
 
     private:
         GLuint id_   = 0;
         GLuint type_ = 0;
-        VertexVector& data_;
         size_t cache_data_size_ = 0;
     };
 }

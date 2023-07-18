@@ -15,6 +15,11 @@ namespace easy::graphics::core {
         return data_[index];
     }
 
+    const Vertex& VertexVector::At(size_t index) const
+    {
+        return data_[index];
+    }
+
     void VertexVector::Push(const Vertex& vertex)
     {
         data_.push_back(vertex);
@@ -36,6 +41,11 @@ namespace easy::graphics::core {
     }
 
     Vertex* VertexVector::GetRaw()
+    {
+        return data_.data();
+    }
+
+    const Vertex* VertexVector::GetRaw() const
     {
         return data_.data();
     }

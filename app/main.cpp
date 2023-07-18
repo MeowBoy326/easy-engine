@@ -7,6 +7,8 @@
 #include <Core/h/ShaderProgram.h>
 #include <Core/h/BufferData.h>
 #include <Core/h/VertexArray.h>
+#include <Core/h/RenderTarget.h>
+
 
 
 
@@ -124,13 +126,8 @@ int main()
 		{0, 1, 0}
 	};
 
-	easy::graphics::core::BufferData buffer_data(vertices, GL_ARRAY_BUFFER);
-	easy::graphics::core::BufferData buffer_data2(vertices2, GL_ARRAY_BUFFER);
-
-	easy::graphics::core::VertexArray vertex_array;
-	vertex_array.AddBuffer(buffer_data);
-	easy::graphics::core::VertexArray vertex_array2;
-	vertex_array2.AddBuffer(buffer_data2);
+	easy::graphics::core::RenderTarget render1(GL_ARRAY_BUFFER, shader_program);
+	easy::graphics::core::RenderTarget render2(GL_ARRAY_BUFFER, shader_program);
 
 	int w, h;
 	glfwGetWindowSize(window, &w, &h);
@@ -157,17 +154,11 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// 
-		vertex_array.Bind();
-		buffer_data.Update();
-		shader_program.Run();
-		glDrawArrays(GL_TRIANGLES, 0, vertices.Size());
+		render1.Draw(vertices, GL_TRIANGLES);
 		//
 
 		// 
-		vertex_array2.Bind();
-		buffer_data2.Update();
-		shader_program.Run();
-		glDrawArrays(GL_LINE_STRIP, 0, vertices2.Size());
+		render2.Draw(vertices2, GL_TRIANGLES);
 		//
 
 		// Swap the back buffer with the front buffer

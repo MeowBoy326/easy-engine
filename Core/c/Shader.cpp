@@ -12,14 +12,26 @@ namespace easy::graphics::core {
         Load(type, path);
     }
 
-    Shader::Shader(GLuint type, const char*& data) : type_(type), data_((char*)data)
+    Shader::Shader(GLuint type, const char*& data)
     {
         Load(type, data);
     }
 
-    Shader::Shader(GLuint type, const std::string& data) : type_(type), data_((char*)data.c_str())
+    Shader::Shader(GLuint type, const std::string& data)
     {
         Load(type, data);
+    }
+
+    Shader::Shader(const Shader& other)
+    {
+        was_allocated_ = other.was_allocated_;
+        if (was_allocated_) {
+            data_ = new char[other.data_size_];
+            std::memcpy(data_, other.data_, other.data_size_);
+            data_size_ = other.data_size_;
+        }
+
+        Load(other.type_, (const char*&)other.data_);
     }
 
     Shader::Shader(Shader&& other)
@@ -29,9 +41,11 @@ namespace easy::graphics::core {
         type_ = other.type_;
         other.type_ = 0;
         was_allocated_ = other.was_allocated_;
-        was_allocated_ = false;
+        other.was_allocated_ = false;
         data_ = other.data_;
         other.data_ = nullptr;
+        data_size_ = other.data_size_;
+        other.data_size_ = 0;
     }
 
     Shader::~Shader()
@@ -49,6 +63,7 @@ namespace easy::graphics::core {
 
         was_allocated_ = false;
         data_ = nullptr;
+        data_size_ = 0;
         type_ = 0;
     }
 
@@ -67,7 +82,9 @@ namespace easy::graphics::core {
     {
         Clean();
         type_ = type;
-        data_ = LoadFromFile(path);
+        auto pair = LoadFromFile(path);
+        data_ = pair.first;
+        data_size_ = pair.second;
         was_allocated_ = true;
     }
 
@@ -76,6 +93,7 @@ namespace easy::graphics::core {
         Clean();
         type_ = type;
         data_ = (char*)data;
+        data_size_ = strlen(data);
         id_ = Compile(type_, data_);
     }
 
@@ -84,6 +102,7 @@ namespace easy::graphics::core {
         Clean();
         type_ = type;
         data_ = (char*)data.c_str();
+        data_size_ = data.size();
         id_ = Compile(type_, data_);
     }
 
@@ -115,7 +134,7 @@ namespace easy::graphics::core {
         return log;
     }
 
-    char* Shader::LoadFromFile(const std::filesystem::path& path)
+    std::pair<char*, size_t> Shader::LoadFromFile(const std::filesystem::path& path)
     {
         boost::iostreams::mapped_file_source file(path.string());
         char* file_data;
@@ -128,8 +147,7 @@ namespace easy::graphics::core {
 
         file_data = new char[file.size()];
         std::memcpy(file_data, file.data(), file.size());
-
-        return file_data;
+        return { file_data, file.size() };
     }
 
 }

@@ -7,7 +7,6 @@
 #include <glad/glad.h>
 
 #include <Core_api.h>
-
 #include <Core/h/Shader.h>
 
 namespace easy::graphics::core {

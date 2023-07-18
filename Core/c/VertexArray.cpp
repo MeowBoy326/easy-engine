@@ -15,9 +15,17 @@ namespace easy::graphics::core {
     void VertexArray::AddBuffer(const BufferData& vb)
     {
         vb.Bind();
-        int elements = sizeof(Vertex) / sizeof(float);
-        glVertexAttribPointer(0, elements, GL_FLOAT, GL_FALSE, elements * sizeof(float), NULL);
+        int elements = Vertex::POSITION_ELEMENTS + Vertex::COLOR_ELEMENTS;
+
+        // position attribute
+        glVertexAttribPointer(0, Vertex::POSITION_ELEMENTS, GL_FLOAT, GL_FALSE,
+            elements * sizeof(float), NULL);
         glEnableVertexAttribArray(0);
+
+        // color attribute
+        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 
+            elements * sizeof(float), (void*)(Vertex::COLOR_ELEMENTS * sizeof(float)));
+        glEnableVertexAttribArray(1);
     }
 
     void VertexArray::Bind() const

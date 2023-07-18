@@ -17,9 +17,16 @@ namespace easy::graphics::core {
         float& GetY();
         float& GetZ();
 
+        static const int POSITION_ELEMENTS = 3;
+        static const int COLOR_ELEMENTS    = 4;
     private:
         float x_ = 0;
         float y_ = 0;
         float z_ = 0;
+
+        float r_ = 0;
+        float g_ = 0;
+        float b_ = 0;
+        float a_ = 1;
     };
 }

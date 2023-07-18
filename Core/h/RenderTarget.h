@@ -9,9 +9,6 @@
 #include <Core/h/BufferData.h>
 #include <Core/h/ShaderProgram.h>
 
-
-// Todo: Recibir parametro para los vertices y tipo de elemento a dibujar en buffer data 
-
 namespace easy::graphics::core {
     class CORE_EXPORT RenderTarget {
     public:
@@ -19,13 +16,14 @@ namespace easy::graphics::core {
         RenderTarget(GLuint buffer_type, const ShaderProgram& shader_program);
 
         void SetShaderProgram(const ShaderProgram& shader_program);
-        virtual void Draw(const VertexVector& vertices, GLuint primitive_type);
-        
+        void Draw(const VertexVector& vertices, GLuint primitive_type);
+
     protected:
         VertexArray VAO;
         BufferData  VBO;
         ShaderProgram shader_program;
 
-        void BaseDraw();
+        void BaseDraw(const VertexVector& vertices, GLuint primitive_type);
+        virtual void DrawImpl(const VertexVector& vertices, GLuint primitive_type);
     };
 }

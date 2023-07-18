@@ -5,6 +5,10 @@
 #include <Core/h/VertexVector.h>
 #include <Core/h/Shader.h>
 #include <Core/h/ShaderProgram.h>
+#include <Core/h/BufferData.h>
+#include <Core/h/VertexArray.h>
+
+
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -85,8 +89,7 @@ int main()
 
 	//Load GLAD so it configures OpenGL
 	gladLoadGL();
-	// Specify the viewport of OpenGL in the Window
-	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
+
 	glViewport(0, 0, 800, 800);
 
 	// Create Vertex Shader Object and get its reference
@@ -109,34 +112,25 @@ int main()
 	// Vertices coordinates
 	easy::graphics::core::VertexVector vertices =
 	{
-		{ -0.5f,   -0.5f * float(sqrt(3))   / 3,     0.0f},  // Lower left corner
+		{ -0.5f,   -0.5f * float(sqrt(3)) / 3,     0.0f},  // Lower left corner
 		{  0.5f,   -0.5f * float(sqrt(3)) / 3,     0.0f }, // Lower right corner
 		{  0.0f,    0.5f * float(sqrt(3)) * 2 / 3, 0.0f}   // Upper corner
 	};
 
-	// Create reference containers for the Vartex Array Object and the Vertex Buffer Object
-	GLuint VAO, VBO;
+	easy::graphics::core::VertexVector vertices2 =
+	{
+		{-1, -1, 0},
+		{1, -1, 0},
+		{0, 1, 0}
+	};
 
-	// Generate the VAO and VBO with only 1 object each
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+	easy::graphics::core::BufferData buffer_data(vertices, GL_ARRAY_BUFFER);
+	easy::graphics::core::BufferData buffer_data2(vertices2, GL_ARRAY_BUFFER);
 
-	// Make the VAO the current Vertex Array Object by binding it
-	glBindVertexArray(VAO);
-
-	// Bind the VBO specifying it's a GL_ARRAY_BUFFER
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	// Introduce the vertices into the VBO
-	glBufferData(GL_ARRAY_BUFFER, vertices.SizeOf(), vertices.GetRaw(), GL_DYNAMIC_DRAW);
-
-	// Configure the Vertex Attribute so that OpenGL knows how to read the VBO
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
-	// Enable the Vertex Attribute so that OpenGL knows to use it
-	glEnableVertexAttribArray(0);
-
-	// Bind both the VBO and VAO to 0 so that we don't accidentally modify the VAO and VBO we created
-	// glBindBuffer(GL_ARRAY_BUFFER, 0);
-	// glBindVertexArray(0);
+	easy::graphics::core::VertexArray vertex_array;
+	vertex_array.AddBuffer(buffer_data);
+	easy::graphics::core::VertexArray vertex_array2;
+	vertex_array2.AddBuffer(buffer_data2);
 
 	int w, h;
 	glfwGetWindowSize(window, &w, &h);
@@ -147,28 +141,35 @@ int main()
 
 		double xpos, ypos;
 		glfwGetCursorPos(window, &xpos, &ypos);
+
 		xpos = Normalice(w, xpos);
 		ypos = -1 *  Normalice(h, ypos);
 
 		vertices.At(2).GetX() = xpos;
 		vertices.At(2).GetY() = ypos;
 
-		std::cout << xpos << "|" << ypos << std::endl;
+		vertices2.At(0).GetX() = xpos;
+		vertices2.At(0).GetY() = ypos;
 
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Update the vertices into GPU
-		glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.SizeOf(), vertices.GetRaw());
-		// Tell OpenGL which Shader Program we want to use
+		// 
+		vertex_array.Bind();
+		buffer_data.Update();
 		shader_program.Run();
+		glDrawArrays(GL_TRIANGLES, 0, vertices.Size());
+		//
 
-		// Bind the VAO so OpenGL knows to use it
-		glBindVertexArray(VAO);
-		// Draw the triangle using the GL_TRIANGLES primitive
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		// 
+		vertex_array2.Bind();
+		buffer_data2.Update();
+		shader_program.Run();
+		glDrawArrays(GL_LINE_STRIP, 0, vertices2.Size());
+		//
+
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
@@ -176,10 +177,6 @@ int main()
 	}
 
 
-
-	// Delete all the objects we've created
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
 	// Delete window before ending the program
 	glfwDestroyWindow(window);
 	// Terminate GLFW before ending the program

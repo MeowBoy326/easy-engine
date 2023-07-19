@@ -10,6 +10,8 @@
 #include <Core/h/DefaultShaders.h>
 
 namespace easy::graphics::core {
+
+    //TODO: Think about Shaders id leaks
     class CORE_EXPORT Shader {
     public:
         Shader() = default;
@@ -42,17 +44,20 @@ namespace easy::graphics::core {
         std::string LogInfo(GLuint id, GLuint type);
         std::pair<char*, size_t> LoadFromFile(const std::filesystem::path& path);
     };
-
+    
+    //TODO: Think about ShadersDefault delete
     struct DefaultShaders {
     public:
-        static Shader Vertex()
+        static const Shader& Vertex()
         {
-            return Shader(GL_VERTEX_SHADER, DEFAULT_VERTEX_SHADER_SOURCE);
+            static const Shader shader(GL_VERTEX_SHADER, DEFAULT_VERTEX_SHADER_SOURCE);
+            return shader;
         }
 
-        static Shader Fragment()
+        static const Shader& Fragment()
         {
-            return Shader(GL_FRAGMENT_SHADER, DEFAULT_FRAGMENT_SHADER_SOURCE);
+            static const Shader shader(GL_FRAGMENT_SHADER, DEFAULT_FRAGMENT_SHADER_SOURCE);
+            return shader;
         }
     private:
         DefaultShaders() = default;

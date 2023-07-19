@@ -37,11 +37,12 @@ include(GenerateExportHeader)
 add_subdirectory("app")
 add_subdirectory("3p")
 add_subdirectory("Core")
-
+add_subdirectory("Shapes")
 
 # install
 install(TARGETS
   Core
+  Shapes
   app
   glad
   RUNTIME DESTINATION bin

@@ -8,37 +8,13 @@
 #include <Core/h/BufferData.h>
 #include <Core/h/VertexArray.h>
 #include <Core/h/RenderTarget.h>
+#include <Shapes/h/Triangle.h>
 
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-void LogShader(GLuint id, GLuint type)
-{
-    GLint status;
-    GLsizei info_lenght = 0;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &status);
-
-    if (status == GL_FALSE) {
-        glGetShaderiv(id, type, &info_lenght);
-        GLchar* buffer = (GLchar*)_malloca(info_lenght * sizeof(GLchar));
-        glGetShaderInfoLog(id, info_lenght, NULL, buffer);
-        std::cout << buffer << std::endl;
-        _freea(buffer);
-    }
-}
-
-GLuint CreateShader(GLuint type, const char*& src)
-{
-   GLuint shader = glCreateShader(type);
-   glShaderSource(shader, 1, &src, NULL);
-   glCompileShader(shader);
-
-   LogShader(shader, type);
-
-   return shader;
-}
 
 float Normalice(float max, float current)
 {
@@ -76,32 +52,12 @@ int main()
 
 	glViewport(0, 0, 800, 800);
 
-	std::vector<easy::graphics::core::Shader> shaders;
-	shaders.push_back(std::move(easy::graphics::core::DefaultShaders::Vertex()));
-	shaders.push_back(std::move(easy::graphics::core::DefaultShaders::Fragment()));
-
-	easy::graphics::core::ShaderProgram shader_program(shaders);
-
-	// Vertices coordinates
-	easy::graphics::core::VertexVector vertices =
-	{
-		{ -0.5f,   -0.5f * float(sqrt(3)) / 3,     0.0f},  // Lower left corner
-		{  0.5f,   -0.5f * float(sqrt(3)) / 3,     0.0f }, // Lower right corner
-		{  0.0f,    0.5f * float(sqrt(3)) * 2 / 3, 0.0f}   // Upper corner
-	};
-
-	easy::graphics::core::VertexVector vertices2 =
-	{
-		{-1, -1, 0},
-		{1, -1, 0},
-		{0, 1,  0}
-	};
-
-	easy::graphics::core::RenderTarget render1(GL_ARRAY_BUFFER, shader_program);
-	easy::graphics::core::RenderTarget render2(GL_ARRAY_BUFFER, shader_program);
+	easy::graphics::shapes::Triangle t1({ -1, -1, 0}, { 1, -1, 0 }, { 0, 1,  0});
 
 	int w, h;
 	glfwGetWindowSize(window, &w, &h);
+
+	std::cout << sizeof(easy::graphics::core::Vertex) << std::endl;
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
@@ -113,24 +69,15 @@ int main()
 		xpos = Normalice(w, xpos);
 		ypos = -1 *  Normalice(h, ypos);
 
-		vertices.At(2).GetX() = xpos;
-		vertices.At(2).GetY() = ypos;
-
-		vertices2.At(0).GetX() = xpos;
-		vertices2.At(0).GetY() = ypos;
+		t1.P3().GetX() = xpos;
+		t1.P3().GetY() = ypos;
 
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// 
-		render1.Draw(vertices, GL_TRIANGLES);
-		//
-
-		// 
-		render2.Draw(vertices2, GL_TRIANGLES);
-		//
+		t1.Draw();
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);

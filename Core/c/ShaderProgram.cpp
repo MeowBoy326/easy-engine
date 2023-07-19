@@ -11,7 +11,6 @@ namespace easy::graphics::core {
 
     ShaderProgram::~ShaderProgram()
     {
-        Clean();
     }
 
     void ShaderProgram::Clean()

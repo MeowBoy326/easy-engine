@@ -23,8 +23,8 @@ namespace easy::graphics::core {
         glEnableVertexAttribArray(0);
 
         // color attribute
-        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 
-            elements * sizeof(float), (void*)(Vertex::COLOR_ELEMENTS * sizeof(float)));
+        glVertexAttribPointer(1, Vertex::COLOR_ELEMENTS, GL_FLOAT, GL_FALSE,
+            elements * sizeof(float), (void*)(Vertex::POSITION_ELEMENTS * sizeof(float)));
         glEnableVertexAttribArray(1);
     }
 

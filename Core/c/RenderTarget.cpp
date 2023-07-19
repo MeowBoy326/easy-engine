@@ -7,7 +7,6 @@ namespace easy::graphics::core {
         shaders.push_back(DefaultShaders::Vertex());
         shaders.push_back(DefaultShaders::Fragment());
         shader_program = ShaderProgram(shaders);
-
         VAO.AddBuffer(VBO);
     }
 
@@ -22,6 +21,10 @@ namespace easy::graphics::core {
     void RenderTarget::SetShaderProgram(const ShaderProgram& shader_program)
     {
         this->shader_program = shader_program;
+    }
+
+    void RenderTarget::Draw()
+    {
     }
 
     void RenderTarget::Draw(const VertexVector& vertices, GLuint primitive_type)

@@ -17,13 +17,16 @@ namespace easy::graphics::core {
 
         void SetShaderProgram(const ShaderProgram& shader_program);
         void Draw(const VertexVector& vertices, GLuint primitive_type);
+        virtual void Draw();
+
 
     protected:
+        void BaseDraw(const VertexVector& vertices, GLuint primitive_type);
+        virtual void DrawImpl(const VertexVector& vertices, GLuint primitive_type);
+
+    private:
         VertexArray VAO;
         BufferData  VBO;
         ShaderProgram shader_program;
-
-        void BaseDraw(const VertexVector& vertices, GLuint primitive_type);
-        virtual void DrawImpl(const VertexVector& vertices, GLuint primitive_type);
     };
 }

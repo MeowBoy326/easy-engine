@@ -10,7 +10,12 @@ namespace easy::graphics::core {
         Vertex() = default;
         Vertex(const Vertex &) = default;
         Vertex(Vertex&&) = default;
+        Vertex(float x, float y, float z, float r, float g, float b, float a);
         Vertex(float x, float y, float z = 0);
+
+
+        Vertex& operator=(const Vertex&) = default;
+        Vertex& operator=(Vertex&&) = default;
 
         VertexUnitType* GetRaw();
         float& GetX();

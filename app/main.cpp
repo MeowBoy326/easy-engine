@@ -24,6 +24,8 @@ float Normalice(float max, float current)
 
 int main()
 {
+	using namespace easy::graphics::core;
+
 	// Initialize GLFW
 	glfwInit();
 
@@ -52,7 +54,8 @@ int main()
 
 	glViewport(0, 0, 800, 800);
 
-	easy::graphics::shapes::Triangle t1({ -1, -1, 0}, { 1, -1, 0 }, { 0, 1,  0});
+	easy::graphics::shapes::Triangle t1({ -1, -1, 0}, { 1, -1, 0}, { 0, 1, 0});
+	t1.SetFillColor(Palette::BLUE);
 
 	int w, h;
 	glfwGetWindowSize(window, &w, &h);
@@ -69,8 +72,8 @@ int main()
 		xpos = Normalice(w, xpos);
 		ypos = -1 *  Normalice(h, ypos);
 
-		t1.P3().GetX() = xpos;
-		t1.P3().GetY() = ypos;
+		t1.P3().X() = xpos;
+		t1.P3().Y() = ypos;
 
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);

@@ -1,0 +1,1 @@
+1. Fix shared libs with glad and opengl

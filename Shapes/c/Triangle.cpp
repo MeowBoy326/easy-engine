@@ -50,5 +50,4 @@ namespace easy::graphics::shapes {
     {
         BaseDraw(vertices_, GL_TRIANGLES);
     }
-
 }

@@ -9,14 +9,11 @@ namespace easy::graphics::core {
     {
     }
 
-    Vertex::Vertex(float x, float y, float z, float r, float g, float b, float a) :
+    Vertex::Vertex(float x, float y, float z, const core::Color& color) :
         x_(x),
         y_(y),
         z_(z),
-        r_(r),
-        g_(g),
-        b_(b),
-        a_(a)
+        color_(color)
     {
     }
 
@@ -25,19 +22,24 @@ namespace easy::graphics::core {
         return (VertexUnitType*)this;
     }
 
-    float& Vertex::GetX()
+    float& Vertex::X()
     {
         return x_;
     }
 
-    float& Vertex::GetY()
+    float& Vertex::Y()
     {
         return y_;
     }
 
-    float& Vertex::GetZ()
+    float& Vertex::Z()
     {
         return z_;
+    }
+
+    Color& Vertex::Color()
+    {
+        return color_;
     }
 
 }

@@ -14,7 +14,6 @@ namespace easy::graphics::core {
         VertexVector(VertexVector&&) = default;
         VertexVector(std::initializer_list<Vertex>&& vertices);
 
-
         Vertex& At(size_t index);
         const Vertex& At(size_t index) const;
 
@@ -26,6 +25,10 @@ namespace easy::graphics::core {
 
         Vertex* GetRaw();
         const Vertex* GetRaw() const;
+
+        std::vector<Vertex>::iterator begin() { return data_.begin(); }
+        std::vector<Vertex>::iterator end() { return data_.end(); }
+
 
     private:
         std::vector<Vertex> data_;

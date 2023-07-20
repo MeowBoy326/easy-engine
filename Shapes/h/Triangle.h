@@ -17,10 +17,24 @@ namespace easy::graphics::shapes {
         const core::Vertex& P2() const;
         const core::Vertex& P3() const;
 
-        core::Vertex& P1();
-        core::Vertex& P2();
-        core::Vertex& P3();
+        void P1(const core::Vertex& vertex);
+        void P1(const core::Position& position);
+
+        void P2(const core::Vertex& vertex);
+        void P2(const core::Position& position);
+
+        void P3(const core::Vertex& vertex);
+        void P3(const core::Position& position);
 
         void Draw() override;
+
+        void Position(const core::Position& position);
+        const core::Position& Position() const;
+
+
+    private:
+        core::Position center_;
+
+        void RecalculateCenter();
     };
 }

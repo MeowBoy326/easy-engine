@@ -2,17 +2,12 @@
 
 namespace easy::graphics::core {
 
-    Vertex::Vertex(float x, float y, float z):
-        x_(x),
-        y_(y),
-        z_(z)
+    Vertex::Vertex(const core::Position& position) : position_(position)
     {
     }
 
-    Vertex::Vertex(float x, float y, float z, const core::Color& color) :
-        x_(x),
-        y_(y),
-        z_(z),
+    Vertex::Vertex(const core::Position& position, const core::Color& color) :
+        position_(position),
         color_(color)
     {
     }
@@ -22,24 +17,26 @@ namespace easy::graphics::core {
         return (VertexUnitType*)this;
     }
 
-    float& Vertex::X()
+    core::Position& Vertex::Position()
     {
-        return x_;
+        return position_;
     }
 
-    float& Vertex::Y()
+    const core::Position& Vertex::Position() const
     {
-        return y_;
+        return position_;
     }
 
-    float& Vertex::Z()
-    {
-        return z_;
-    }
-
-    Color& Vertex::Color()
+    core::Color& Vertex::Color()
     {
         return color_;
     }
+
+    const core::Color& Vertex::Color() const
+    {
+        return color_;
+    }
+
+
 
 }

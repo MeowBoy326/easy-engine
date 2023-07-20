@@ -9,6 +9,7 @@
 #include <Core/h/BufferData.h>
 #include <Core/h/VertexArray.h>
 #include <Core/h/RenderTarget.h>
+#include <Core/h/Position.h>
 #include <Shapes/h/Triangle.h>
 
 
@@ -60,62 +61,64 @@ int main()
 
 	glViewport(0, 0, 800, 800);
 
-	easy::graphics::shapes::Triangle t1({ -0.5, -0.5, 0}, { 0.5, -0.5, 0}, { 0, 0.5, 0});
+	easy::graphics::shapes::Triangle t1(
+		Position{ -0.5, -0.5, 0},
+		Position{ 0.5, -0.5, 0},
+		Position{ 0, 0.5, 0}
+	);
+
 	t1.SetFillColor(Palette::RED);
 
 	int w, h;
 	glfwGetWindowSize(window, &w, &h);
 
-	std::cout << sizeof(easy::graphics::core::Vertex) << std::endl;
-
 		float degrees = 0;
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
-		//double xpos, ypos;
-		//glfwGetCursorPos(window, &xpos, &ypos);
-		//
-		//xpos = Normalice(w, xpos);
-		//ypos = -1 *  Normalice(h, ypos);
-		//
-
+#if 0 
 		float cosr = cos(Degrees2Rads(degrees));
 		float sinr = sin(Degrees2Rads(degrees));
 
 
-		float x1 = t1.P1().X() * cosr - t1.P1().Y() * sinr;
-		float y1 = t1.P1().X() * sinr + t1.P1().Y() * cosr;
+		float x1 = t1.P1().Position().x * cosr - t1.P1().Position().y * sinr;
+		float y1 = t1.P1().Position().x * sinr + t1.P1().Position().y * cosr;
 
-		float x2 = t1.P2().X() * cosr - t1.P2().Y() * sinr;
-		float y2 = t1.P2().X() * sinr + t1.P2().Y() * cosr;
+		float x2 = t1.P2().Position().x * cosr - t1.P2().Position().y * sinr;
+		float y2 = t1.P2().Position().x * sinr + t1.P2().Position().y * cosr;
 
-		float x3 = t1.P3().X() * cosr - t1.P3().Y() * sinr;
-		float y3 = t1.P3().X() * sinr + t1.P3().Y() * cosr;
+		float x3 = t1.P3().Position().x * cosr - t1.P3().Position().y * sinr;
+		float y3 = t1.P3().Position().x * sinr + t1.P3().Position().y * cosr;
 
-		t1.P1().X() = x1;
-		t1.P1().Y() = y1;
+		t1.P1(Position{x1, y1});
 
-		t1.P2().X() = x2;
-		t1.P2().Y() = y2;
+		t1.P2(Position{x2, y2});
 
-		t1.P3().X() = x3;
-		t1.P3().Y() = y3;
+		t1.P3(Position{ x3, y3 });
+#else
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+		
+		xpos = Normalice(w, xpos);
+		ypos = -1 *  Normalice(h, ypos);
+
+		t1.Position(Position{(float)xpos, (float)ypos});
+#endif
+
 
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		std::cout << "x: " << t1.Position().x << " y:" << t1.Position().y << "\n";
 		t1.Draw();
-
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
 		glfwPollEvents();
 
 		//std::this_thread::sleep_for(std::chrono::milliseconds(50));
-
-		degrees += 0.01;
 	}
 
 

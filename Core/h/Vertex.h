@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Core_api.h>
+#include <Core/h/Position.h>
 #include <Core/h/Color.h>
 
 namespace easy::graphics::core {
@@ -14,24 +15,22 @@ namespace easy::graphics::core {
         Vertex() = default;
         Vertex(const Vertex &) = default;
         Vertex(Vertex&&) = default;
-        Vertex(float x, float y, float z, const Color& color);
-        Vertex(float x, float y, float z = 0);
+        Vertex(const Position& position, const Color& color);
+        Vertex(const Position& position);
 
         Vertex& operator=(const Vertex&) = default;
         Vertex& operator=(Vertex&&) = default;
 
         VertexUnitType* GetRaw();
 
-        float& X();
-        float& Y();
-        float& Z();
+        core::Position& Position();
+        const core::Position& Position() const;
 
-        Color& Color();
+        core::Color& Color();
+        const core::Color& Color() const;
 
     private:
-        float x_ = 0;
-        float y_ = 0;
-        float z_ = 0;
+        core::Position position_;
         core::Color color_;
     };
 }

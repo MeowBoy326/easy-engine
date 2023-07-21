@@ -1,9 +1,0 @@
-{
-    "version": 4,
-    "vendor": {
-        "conan": {}
-    },
-    "include": [
-        "C:/Users/argui/Documents/proyectos/EasyEngine/out/build/x64-Debug\\CMakePresets.json"
-    ]
-}

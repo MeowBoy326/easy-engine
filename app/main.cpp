@@ -11,6 +11,7 @@
 #include <Core/h/RenderTarget.h>
 #include <Core/h/Position.h>
 #include <Shapes/h/Triangle.h>
+#include <Shapes/h/Rectangle.h>
 
 
 #define GLFW_INCLUDE_NONE
@@ -67,6 +68,8 @@ int main()
 		Position{ 0, 0.5, 0}
 	);
 
+	easy::shapes::Rectangle r1(Position{ -0.5, -0.5, 0 }, 0.5, 0.5);
+
 	t1.SetFillColor(Palette::RED);
 
 	int w, h;
@@ -83,9 +86,9 @@ int main()
 		xpos = Normalice(w, xpos);
 		ypos = -1 * Normalice(h, ypos);
 
-		t1.Position(Position{ (float)xpos, (float)ypos });
+		r1.Position(Position{ (float)xpos, (float)ypos });
 
-		t1.Rotate(Degrees2Rads(degrees));
+		r1.Rotate(Degrees2Rads(degrees));
 #endif
 
 
@@ -95,7 +98,9 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		std::cout << "x: " << t1.Position().x << " y:" << t1.Position().y << "\n";
-		t1.Draw();
+		//t1.Draw();
+		r1.Draw();
+
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events

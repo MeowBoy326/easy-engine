@@ -31,7 +31,7 @@ float Degrees2Rads(float degrees)
 
 int main()
 {
-	using namespace easy::graphics::core;
+	using namespace easy::core;
 
 	// Initialize GLFW
 	glfwInit();
@@ -61,7 +61,7 @@ int main()
 
 	glViewport(0, 0, 800, 800);
 
-	easy::graphics::shapes::Triangle t1(
+	easy::shapes::Triangle t1(
 		Position{ -0.5, -0.5, 0},
 		Position{ 0.5, -0.5, 0},
 		Position{ 0, 0.5, 0}
@@ -72,11 +72,19 @@ int main()
 	int w, h;
 	glfwGetWindowSize(window, &w, &h);
 
-		float degrees = 0;
+	float degrees = 0.1;
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
-#if 0 
+#if 1
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+
+		xpos = Normalice(w, xpos);
+		ypos = -1 * Normalice(h, ypos);
+
+		t1.Position(Position{ (float)xpos, (float)ypos });
+
 		float cosr = cos(Degrees2Rads(degrees));
 		float sinr = sin(Degrees2Rads(degrees));
 
@@ -95,14 +103,6 @@ int main()
 		t1.P2(Position{x2, y2});
 
 		t1.P3(Position{ x3, y3 });
-#else
-		double xpos, ypos;
-		glfwGetCursorPos(window, &xpos, &ypos);
-		
-		xpos = Normalice(w, xpos);
-		ypos = -1 *  Normalice(h, ypos);
-
-		t1.Position(Position{(float)xpos, (float)ypos});
 #endif
 
 

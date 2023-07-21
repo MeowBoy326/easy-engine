@@ -7,7 +7,7 @@
 #include <Core_api.h>
 #include <Core/h/VertexVector.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
     class CORE_EXPORT BufferData {
     public:
         BufferData(GLuint type);

@@ -7,7 +7,7 @@
 #include <Core_api.h>
 #include <Core/h/BufferData.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
     class CORE_EXPORT VertexArray {
     public:
         VertexArray();

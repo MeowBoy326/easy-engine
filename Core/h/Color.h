@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-namespace easy::graphics::core {
+namespace easy::core {
 
     class CORE_EXPORT Color {
     public:

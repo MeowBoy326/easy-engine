@@ -2,7 +2,7 @@
 
 #include <Core_api.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
     class CORE_EXPORT Position {
     public:
         Position() = default;

@@ -2,7 +2,7 @@
 
 #include <Core/h/ShaderProgram.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
 
     ShaderProgram::ShaderProgram(const std::vector<Shader>& shaders)
     {

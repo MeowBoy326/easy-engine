@@ -1,6 +1,6 @@
 #include <Core/h/BufferData.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
 
     BufferData::BufferData(GLuint type) : type_(type)
     {

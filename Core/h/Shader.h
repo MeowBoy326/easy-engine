@@ -9,7 +9,7 @@
 #include <Core_api.h>
 #include <Core/h/DefaultShaders.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
 
     //TODO: Think about Shaders id leaks
     class CORE_EXPORT Shader {

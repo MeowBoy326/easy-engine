@@ -9,7 +9,7 @@
 #include <Core_api.h>
 #include <Core/h/Shader.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
     class CORE_EXPORT ShaderProgram {
     public:
         ShaderProgram() = default;

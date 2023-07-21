@@ -1,6 +1,6 @@
 #include <Core/h/Color.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
 
     const Color Palette::RED(255, 0, 0);
     const Color Palette::GREEN(0, 255, 0);

@@ -4,7 +4,7 @@
 
 #include <Shapes/h/Shape.h>
 
-namespace easy::graphics::shapes {
+namespace easy::shapes {
 
     class SHAPES_EXPORT Triangle : public Shape {
     public:
@@ -27,14 +27,5 @@ namespace easy::graphics::shapes {
         void P3(const core::Position& position);
 
         void Draw() override;
-
-        void Position(const core::Position& position);
-        const core::Position& Position() const;
-
-
-    private:
-        core::Position center_;
-
-        void RecalculateCenter();
     };
 }

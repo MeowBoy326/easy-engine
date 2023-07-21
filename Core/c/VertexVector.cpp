@@ -1,6 +1,6 @@
 #include <Core/h/VertexVector.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
 
     VertexVector::VertexVector(std::initializer_list<Vertex>&& vertices)
     {

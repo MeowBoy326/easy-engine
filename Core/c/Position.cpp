@@ -1,6 +1,6 @@
 #include <Core/h/Position.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
     Position::Position(float x, float y, float z) : x(x), y(y), z(z)
     {
     }

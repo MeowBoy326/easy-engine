@@ -9,7 +9,7 @@
 #include <Core/h/BufferData.h>
 #include <Core/h/ShaderProgram.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
     class CORE_EXPORT RenderTarget {
     public:
         RenderTarget(GLuint buffer_type);
@@ -18,7 +18,6 @@ namespace easy::graphics::core {
         void SetShaderProgram(const ShaderProgram& shader_program);
         void Draw(const VertexVector& vertices, GLuint primitive_type);
         virtual void Draw();
-
 
     protected:
         void BaseDraw(const VertexVector& vertices, GLuint primitive_type);

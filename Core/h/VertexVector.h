@@ -6,9 +6,12 @@
 #include <Core_api.h>
 #include <Core/h/Vertex.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
     class CORE_EXPORT VertexVector {
     public:
+        using iterator = std::vector<Vertex>::iterator;
+        using const_iterator = std::vector<Vertex>::const_iterator;
+
         VertexVector() = default;
         VertexVector(const VertexVector&) = default;
         VertexVector(VertexVector&&) = default;
@@ -26,8 +29,11 @@ namespace easy::graphics::core {
         Vertex* GetRaw();
         const Vertex* GetRaw() const;
 
-        std::vector<Vertex>::iterator begin() { return data_.begin(); }
-        std::vector<Vertex>::iterator end() { return data_.end(); }
+        iterator begin() { return data_.begin(); }
+        iterator end() { return data_.end(); }
+
+        const_iterator begin() const { return data_.begin(); }
+        const_iterator end() const { return data_.end(); }
 
 
     private:

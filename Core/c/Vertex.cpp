@@ -1,6 +1,6 @@
 #include <Core/h/Vertex.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
 
     Vertex::Vertex(const core::Position& position) : position_(position)
     {

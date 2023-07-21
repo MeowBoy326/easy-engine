@@ -1,9 +1,9 @@
 #include <Core/h/RenderTarget.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
     RenderTarget::RenderTarget(GLuint buffer_type) : VAO(), VBO(buffer_type)
     {
-        std::vector<easy::graphics::core::Shader> shaders;
+        std::vector<easy::core::Shader> shaders;
         shaders.push_back(DefaultShaders::Vertex());
         shaders.push_back(DefaultShaders::Fragment());
         shader_program = ShaderProgram(shaders);

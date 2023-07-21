@@ -1,6 +1,6 @@
 #include <Core/h/VertexArray.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
     VertexArray::VertexArray()
     {
         glGenVertexArrays(1, &id_);

@@ -38,10 +38,13 @@ add_subdirectory("app")
 add_subdirectory("3p")
 add_subdirectory("Core")
 add_subdirectory("Shapes")
+add_subdirectory("Components")
+
 
 # install
 install(TARGETS
   Core
+  Components
   Shapes
   app
   glad

@@ -4,7 +4,7 @@
 #include <Core/h/Position.h>
 #include <Core/h/Color.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
     typedef float VertexUnitType ;
 
     class CORE_EXPORT Vertex {

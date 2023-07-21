@@ -1,10 +1,10 @@
 include_directories(..)
 
 #lib name
-set(LIB_NAME "Shapes")
+set(LIB_NAME "Components")
 
 # Per example: LIBS_DEPENDENCIES OpenSSL::SSL OpenSSL::Crypto
-set(LIBS_DEPENDENCIES boost::boost glfw OpenGL::GL glad Core Components)
+set(LIBS_DEPENDENCIES boost::boost Core)
 
 #define lib sources
 file(GLOB CPP_SOURCES  "c/*.cpp" "c/*.cc")

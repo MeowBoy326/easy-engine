@@ -1,6 +1,6 @@
 #pragma once
 
-namespace easy::graphics::core {
+namespace easy::core {
 
     static const char* DEFAULT_VERTEX_SHADER_SOURCE = R"(
         #version 460 core

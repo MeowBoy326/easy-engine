@@ -5,7 +5,7 @@
 
 #include <Core/h/Shader.h>
 
-namespace easy::graphics::core {
+namespace easy::core {
 
     Shader::Shader(GLuint type, const std::filesystem::path& path)
     {

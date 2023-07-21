@@ -85,24 +85,7 @@ int main()
 
 		t1.Position(Position{ (float)xpos, (float)ypos });
 
-		float cosr = cos(Degrees2Rads(degrees));
-		float sinr = sin(Degrees2Rads(degrees));
-
-
-		float x1 = t1.P1().Position().x * cosr - t1.P1().Position().y * sinr;
-		float y1 = t1.P1().Position().x * sinr + t1.P1().Position().y * cosr;
-
-		float x2 = t1.P2().Position().x * cosr - t1.P2().Position().y * sinr;
-		float y2 = t1.P2().Position().x * sinr + t1.P2().Position().y * cosr;
-
-		float x3 = t1.P3().Position().x * cosr - t1.P3().Position().y * sinr;
-		float y3 = t1.P3().Position().x * sinr + t1.P3().Position().y * cosr;
-
-		t1.P1(Position{x1, y1});
-
-		t1.P2(Position{x2, y2});
-
-		t1.P3(Position{ x3, y3 });
+		t1.Rotate(Degrees2Rads(degrees));
 #endif
 
 

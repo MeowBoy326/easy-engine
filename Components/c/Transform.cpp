@@ -37,6 +37,27 @@ namespace easy::component {
         return position_;
     }
 
+    float Transform::Angle() const
+    {
+        return angle_;
+    }
+
+    void Transform::Rotate(float angle)
+    {
+        float cosr = cos(angle);
+        float sinr = sin(angle);
+
+        for (auto& vertex : vertices_) {
+            float x = 0, y = 0;
+            x = vertex.Position().x * cosr - vertex.Position().y * sinr;
+            y = vertex.Position().x * sinr + vertex.Position().y * cosr;
+            vertex.Position() = {x, y, vertex.Position().z};
+        }
+
+        angle_ += angle;
+        Update();
+    }
+
     void Transform::Update()
     {
         position_ = CalculateCenter(vertices_);

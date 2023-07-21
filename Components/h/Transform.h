@@ -12,13 +12,16 @@ namespace easy::component {
         void Position(const core::Position& position);
         const core::Position& Position() const;
 
+        float Angle() const;
+        void  Rotate(float angle);
+
         static core::Position CalculateCenter(const core::VertexVector& vertices);
 
     protected:
         void Update();
 
     private:
-        float angle_ = 0.f;
+        float angle_ = 0.f; //< degress
         core::Position position_;
         core::VertexVector& vertices_;
     };
